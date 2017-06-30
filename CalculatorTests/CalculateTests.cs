@@ -122,15 +122,15 @@ namespace Calculator.Tests
         public void parseParenthesisAndMult()
         {
             Calculate calc = new Calculate();
-            string add = " 2+(1*5)";
+            string add = "2+(1*5)";
             calc.parse(add);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
 
-            Assert.IsTrue(nums.Contains("("), "line 126");
+            Assert.IsFalse(nums.Contains("("), "line 126");
             Assert.IsTrue(nums.Contains("+"), "line 127");
             Assert.IsTrue(nums.Contains("*"), "line 128");
-            Assert.IsTrue(nums.Contains(")"), "line 129");
+            Assert.IsFalse(nums.Contains(")"), "line 129");
             Assert.IsTrue(nums.Contains("1"), "Line 130");
             Assert.IsTrue(nums.Contains("5"), "line 131");
             Assert.IsTrue(nums.Contains("2"), "line 132");
@@ -139,15 +139,15 @@ namespace Calculator.Tests
         public void parseMultAndParenthesis()
         {
             Calculate calc = new Calculate();
-            string add = " (2+1)*5";
+            string add = "(2+1)*5";
             calc.parse(add);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
 
-            Assert.IsTrue(nums.Contains("("), "line 143");
+            Assert.IsFalse(nums.Contains("("), "line 143");
             Assert.IsTrue(nums.Contains("+"), "line 144");
             Assert.IsTrue(nums.Contains("*"), "line 145");
-            Assert.IsTrue(nums.Contains(")"), "line 146");
+            Assert.IsFalse(nums.Contains(")"), "line 146");
             Assert.IsTrue(nums.Contains("1"), "Line 147");
             Assert.IsTrue(nums.Contains("5"), "line 148");
             Assert.IsTrue(nums.Contains("2"), "line 149");
@@ -256,7 +256,7 @@ namespace Calculator.Tests
         public void parseParenthesisAndMultDec()
         {
             Calculate calc = new Calculate();
-            string add = " 2.1+(1.1*5.1)";
+            string add = "2.1+(1.1*5.1)";
             calc.parse(add);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -274,7 +274,7 @@ namespace Calculator.Tests
         public void parseMultAndParenthesisDec()
         {
             Calculate calc = new Calculate();
-            string add = " (2.1+1.1)*5.1";
+            string add = "(2.1+1.1)*5.1";
             calc.parse(add);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -303,7 +303,7 @@ namespace Calculator.Tests
         public void parseLnAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+l5";
+            string ln = "2+l5";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -327,7 +327,7 @@ namespace Calculator.Tests
         public void parseLogAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+L5";
+            string ln = "2+L5";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -351,7 +351,7 @@ namespace Calculator.Tests
         public void parsePieAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+p";
+            string ln = "2+p";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -364,7 +364,7 @@ namespace Calculator.Tests
         public void parseLnAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+l5.1";
+            string ln = "2.1+l5.1";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -388,7 +388,7 @@ namespace Calculator.Tests
         public void parseLogAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+L5.1";
+            string ln = "2.1+L5.1";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -401,7 +401,7 @@ namespace Calculator.Tests
         public void parsePieAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+p";
+            string ln = "2.1+p";
             calc.parse(ln);
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
@@ -471,7 +471,7 @@ namespace Calculator.Tests
         public void evalParenthesisAndMult()
         {
             Calculate calc = new Calculate();
-            string add = " 2+(1*5)";
+            string add = "2+(1*5)";
             calc.parse(add);
             Assert.AreEqual(7, calc.evaluate(), "line 470");
         }
@@ -479,7 +479,7 @@ namespace Calculator.Tests
         public void evalMultAndParenthesis()
         {
             Calculate calc = new Calculate();
-            string add = " (2+1)*5";
+            string add = "(2+1)*5";
             calc.parse(add);
             Assert.AreEqual(10, calc.evaluate(), "line 478");
         }
@@ -547,7 +547,7 @@ namespace Calculator.Tests
         public void evalParenthesisAndMultDec()
         {
             Calculate calc = new Calculate();
-            string add = " 2.1+(1.1*5.1)";
+            string add = "2.1+(1.1*5.1)";
             calc.parse(add);
             Assert.AreEqual(7.71, calc.evaluate(), "line 542");
         }
@@ -555,7 +555,7 @@ namespace Calculator.Tests
         public void evalMultAndParenthesisDec()
         {
             Calculate calc = new Calculate();
-            string add = " (2.1+1.1)*5.1";
+            string add = "(2.1+1.1)*5.1";
             calc.parse(add);
             Assert.AreEqual(16.32, calc.evaluate(), "line 550");
         }
@@ -572,7 +572,7 @@ namespace Calculator.Tests
         public void evalLnAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+l5";
+            string ln = "2+l5";
             calc.parse(ln);
             double val = Math.Round((2 + Math.Log(5)), 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 568");
@@ -590,7 +590,7 @@ namespace Calculator.Tests
         public void evalLogAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+L5";
+            string ln = "2+L5";
             calc.parse(ln);
             double val = Math.Round((2 + Math.Log10(5)), 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 585");
@@ -607,7 +607,7 @@ namespace Calculator.Tests
         public void evalPieAndOperate()
         {
             Calculate calc = new Calculate();
-            string ln = " 2+p";
+            string ln = "2+p";
             calc.parse(ln);
             double val = Math.Round(2 + Math.PI, 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 600");
@@ -616,7 +616,7 @@ namespace Calculator.Tests
         public void evalLnAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+l5.1";
+            string ln = "2.1+l5.1";
             calc.parse(ln);
             double val = Math.Round(2.1 + Math.Log(5.1), 4);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 4), "line 609");
@@ -633,7 +633,7 @@ namespace Calculator.Tests
         public void evalLogAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+L5.1";
+            string ln = "2.1+L5.1";
             calc.parse(ln);
             double val = Math.Round(2.1 + Math.Log10(5.1), 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 625");
@@ -642,7 +642,7 @@ namespace Calculator.Tests
         public void evalPieAndOperateDec()
         {
             Calculate calc = new Calculate();
-            string ln = " 2.1+p";
+            string ln = "2.1+p";
             calc.parse(ln);
             double val = Math.Round(2.1 + Math.PI, 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 634");
