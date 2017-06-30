@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 // for future ref
 //https://codeshare.io/21q7y0
 // last run code metrics
- //calculator // 76  151 7   33  520
- //tests // 66  63  1   7   421
+ //calculator // 80  156 7   35  538
+ //tests // 66  63  1   7   422
 
 
 namespace Calculator.Tests
@@ -481,7 +481,7 @@ namespace Calculator.Tests
             Calculate calc = new Calculate();
             string add = "(2+1)*5";
             calc.parse(add);
-            Assert.AreEqual(10, calc.evaluate(), "line 478");
+            Assert.AreEqual(15, calc.evaluate(), "line 478");
         }
         [TestMethod()]
         public void evalAddDec()
@@ -548,8 +548,9 @@ namespace Calculator.Tests
         {
             Calculate calc = new Calculate();
             string add = "2.1+(1.1*5.1)";
+            double val = 2.1 + (1.1 * 5.1);
             calc.parse(add);
-            Assert.AreEqual(7.71, calc.evaluate(), "line 542");
+            Assert.AreEqual(val, calc.evaluate(), "line 542");
         }
         [TestMethod()]
         public void evalMultAndParenthesisDec()
@@ -565,7 +566,7 @@ namespace Calculator.Tests
             Calculate calc = new Calculate();
             string ln = "l5";
             calc.parse(ln);
-            double val = Math.Round(Math.Log(10), 3);
+            double val = Math.Round(Math.Log(5), 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3), "line 559");
         }
         [TestMethod()]
@@ -705,6 +706,5 @@ namespace Calculator.Tests
             double val = Math.Round(Math.Pow(Math.E, 2), 3);
             Assert.AreEqual(val, Math.Round(calc.evaluate(), 3));
         }
-
     }
 }

@@ -15,15 +15,26 @@ namespace Calculator
         private char[] mathTokens = { 'e', 'L', 'l', 'p', '(', ')' };
         private enum OpNames { Add = 0, Sub, Mult, Divide, Pow, Mod };
         private enum mathNames { E = 0,Ln,Log,Pie};
-
+        /// <summary>
+        /// function  parses given string for later use and evaluation
+        /// </summary>
+        /// <param name="text">string to parse</param>
         public void parse(String text)
         {
             parseString(text);
         }
+        /// <summary>
+        /// function does the sumation of the parsed string
+        /// </summary>
+        /// <returns>returns the total of the all given operations</returns>
         public double evaluate()
         {
             return Evaluate();
         }
+        /// <summary>
+        /// function does the sumation of the parsed string
+        /// </summary>
+        /// <returns>returns the total of the all given operations</returns>
         private double Evaluate()
         {
             int outputSize = output.Count();
@@ -50,11 +61,15 @@ namespace Calculator
             }
             return evalStack.Pop();
         }
-
-        private void convert(string token,int index)
+        /// <summary>
+        /// function converts the given token to the correct math symbol
+        /// </summary>
+        /// <param name="token">the obj to parse</param>
+        /// <param name="operation">the given operation to do</param>
+        private void convert(string token,int operation)
         {
             double tempNum = 0.0;
-            switch ((mathNames)index)
+            switch ((mathNames)operation)
             {
                 case mathNames.E:
                     evalStack.Push(Math.E);
@@ -74,7 +89,13 @@ namespace Calculator
                     throw new FormatException("invalid token");
             }
         }
-
+        /// <summary>
+        /// function sums two numbers using the given math operator symbol
+        /// </summary>
+        /// <param name="firstNum">number to evaluate</param>
+        /// <param name="secondNum">number to evaluate</param>
+        /// <param name="operatr">math operator symbol</param>
+        /// <returns></returns>
         private double answer(double firstNum, double secondNum, string operatr)
         {
             double ans = 0.0;
@@ -103,7 +124,11 @@ namespace Calculator
             }
             return ans;
         }
-
+        /// <summary>
+        /// functions checks if the current token is a math operator symbol
+        /// </summary>
+        /// <param name="token"> current item to check</param>
+        /// <returns>returns true if token is a math operator</returns>
         private bool checkIfOperator(string token)
         {
             bool isOp = false;
@@ -113,7 +138,12 @@ namespace Calculator
             }
             return isOp;
         }
-
+        /// <summary>
+        /// function parses a given string into a postfix notation queue for later use for
+        /// later calculation
+        /// <remarks>when finished the parsed string follows pemdas</remarks>
+        /// </summary>
+        /// <param name="text"></param>
         private void parseString(String text)
         {
             char token;
@@ -144,16 +174,17 @@ namespace Calculator
                     index = numToken(text, index);
                 }
             }
-
             while (operators.Count() != 0)
             {
                 output.Enqueue(operators.Pop());
             }
         }
-
+        /// <summary>
+        ///  Function  parses the token to a valid format
+        /// </summary>
+        /// <param name="token">current math token</param>
         private void mathToken(char token)
         {
-            //private char[] mathTokens = { 'e', 'L', 'l', 'p', '(', ')' };
             int pos = Array.IndexOf(mathTokens, token);
             if (pos == 0) // 'e' token
             {
@@ -176,7 +207,12 @@ namespace Calculator
                 operators.Pop();
             }
         }
-
+        /// <summary>
+        /// function parses current token to valid log format
+        /// </summary>
+        /// <param name="token"> string to parse</param>
+        /// <param name="index">location on string</param>
+        /// <returns> string </returns>
         private string logToken(string token, ref int index)
         {
             string temp = "";
@@ -189,10 +225,10 @@ namespace Calculator
             index = j - 1;// new  curr index
             return temp;
         }
-
-        /*
-* function adds token to queue following pemdas
-*/
+        /// <summary>
+        ///  function adds current token to queue follow pemdas
+        /// </summary>
+        /// <param name="token"></param>
         private void operatorToken(char token)
         {
             if (operators.Count() == 0) // no other operators
@@ -208,10 +244,9 @@ namespace Calculator
                 operators.Push(token.ToString());
             }
         }
-
-        /*
-*captures the len of the number
-*/
+        ///<sumary>
+        ///parses a number token to valid format
+        ///</summary>
         private int numToken(string text, int index)
         {
             String temp = "";
@@ -225,12 +260,10 @@ namespace Calculator
             index = j - 1;// new  curr index
             return index;
         }
-
         ///<summary>
         /// Returns true if the operator at the top of the stack is a higher precedence
         /// than the operator that is passed in. else false;
         /// </summary>
-
         private bool checkPrecedence(char oper)
         {
             if (operators.Count == 0)
@@ -253,15 +286,16 @@ namespace Calculator
                 return false;
             }
         }
-
-        public Char[] tokenList
-        {
-            get { return operatorTokens; }
-        }
+        /// <summary>
+        /// returns a stack of any math operator left in the stack
+        /// </summary>
         public Stack<String> symbolStack
         {
             get { return operators; }
         }
+        /// <summary>
+        ///  returns an ordered queue of math operations following pemdas 
+        /// </summary>
         public Queue<String> DigitQueue
         {
             get { return output; }
