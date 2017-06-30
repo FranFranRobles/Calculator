@@ -123,6 +123,7 @@
             // 
             // display
             // 
+            this.display.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.display.Location = new System.Drawing.Point(22, 12);
             this.display.Multiline = true;
             this.display.Name = "display";
