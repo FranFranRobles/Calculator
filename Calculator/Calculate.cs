@@ -83,16 +83,28 @@ namespace Calculator
 
         private void parseString(String text)
         {
+            char token;
+            int mathTokenIndex = 0;
             for (int index = 0; index < text.Length; index++)
             {
-                char token = text.ElementAt(index);
+                token = text.ElementAt(index);
+                mathTokenIndex = Array.IndexOf(mathTokens, token);
                 if (Array.IndexOf(operatorTokens, token) != -1)//Current token is an operator
                 {
                     operatorToken(token);
                 }
-                else if (Array.IndexOf(mathTokens, token) != -1)
+                else if (mathTokenIndex != -1)
                 {
-                    mathToken(token);
+                    if (mathTokenIndex != 1 && mathTokenIndex != 2)
+                    {
+                        mathToken(token);
+                    }
+                    else
+                    {
+                        string logType = text[index] == 'L' ? "L" : "l";
+                        string tempNum = logToken(text, ref index);
+                        output.Enqueue(logType + tempNum);
+                    }
                 }
                 else //token is a number
                 {
@@ -104,8 +116,6 @@ namespace Calculator
             {
                 output.Enqueue(operators.Pop());
             }
-
-
         }
 
         private void mathToken(char token)
@@ -115,14 +125,6 @@ namespace Calculator
             if (pos == 0) // 'e' token
             {
                 output.Enqueue(token.ToString());
-            }
-            else if (pos == 1)//'L' token L = log 
-            {
-
-            }
-            else if (pos == 2) // 'l' token l = ln
-            {
-
             }
             else if (pos == 3)// 'p' token p = pie
             {
@@ -140,6 +142,19 @@ namespace Calculator
                 }
                 operators.Pop();
             }
+        }
+
+        private string logToken(string token, ref int index)
+        {
+            string temp = "";
+            int j = ++index; // right most index
+            while (j <= (token.Length - 1) && (Char.IsDigit(token.ElementAt(j)) || token.ElementAt(j) == '.'))
+            {
+                temp += token.ElementAt(j).ToString();
+                j++;
+            }
+            index = j - 1;// new  curr index
+            return temp;
         }
 
         /*
