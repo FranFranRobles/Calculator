@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 // for future ref
 //https://codeshare.io/21q7y0
-//
+// last run code metrics
+ //calculator // 76  151 7   33  520
+ //tests // 66  63  1   7   421
 
 
 namespace Calculator.Tests
