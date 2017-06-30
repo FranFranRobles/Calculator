@@ -96,8 +96,8 @@ namespace Calculator.Tests
             var symbols = calc.symbolStack;
 
             Assert.AreEqual("1", nums.Dequeue(), "line 96");
-            Assert.AreEqual("^", nums.Dequeue(), "line 97");
-            Assert.AreEqual("5", nums.Dequeue(), "line 98");
+            Assert.AreEqual("5", nums.Dequeue(), "line 97");
+            Assert.AreEqual("^", nums.Dequeue(), "line 98");
             Assert.AreEqual(0, symbols.Count, "line 99");
         }
         [TestMethod()]
@@ -109,9 +109,9 @@ namespace Calculator.Tests
             var nums = calc.DigitQueue;
             var symbols = calc.symbolStack;
 
-            Assert.IsTrue(nums.Contains("("), "line 110");
+            Assert.IsFalse(nums.Contains("("), "line 110");
             Assert.IsTrue(nums.Contains("+"), "line 111");
-            Assert.IsTrue(nums.Contains(")"), "line 112");
+            Assert.IsFalse(nums.Contains(")"), "line 112");
             Assert.IsTrue(nums.Contains("1"), "Line 113");
             Assert.IsTrue(nums.Contains("5"), "line 114");
             Assert.AreEqual(0, symbols.Count, "line 115");
@@ -447,7 +447,7 @@ namespace Calculator.Tests
             Calculate calc = new Calculate();
             string mod = "1%5";
             calc.parse(mod);
-            Assert.AreEqual(4, calc.evaluate(), "line 446");
+            Assert.AreEqual(1, calc.evaluate(), "line 446");
         }
         [TestMethod()]
         public void evalPow()
@@ -486,16 +486,18 @@ namespace Calculator.Tests
         {
             Calculate calc = new Calculate();
             string add = "1.1+5.1";
+            double val = 1.1 + 5.1;
             calc.parse(add);
-            Assert.AreEqual(6.2, calc.evaluate(), "line 486");
+            Assert.AreEqual(val, calc.evaluate(), "line 486");
         }
         [TestMethod()]
         public void evalSubDec()
         {
             Calculate calc = new Calculate();
             string sub = "1.1-5.1";
+            double val = 1.1 - 5.1;
             calc.parse(sub);
-            Assert.AreEqual(-4, calc.evaluate(), "line 494");
+            Assert.AreEqual(val, calc.evaluate(), "line 494");
         }
         [TestMethod()]
         public void evalMultDec()
@@ -518,14 +520,15 @@ namespace Calculator.Tests
         {
             Calculate calc = new Calculate();
             string mod = "1.1%5.1";
+            double val = 1.1 % 5.1;
             calc.parse(mod);
-            Assert.AreEqual(0, calc.evaluate(), "line 518");
+            Assert.AreEqual(val, calc.evaluate(), "line 518");
         }
         [TestMethod()]
         public void evalPowDec()
         {
             Calculate calc = new Calculate();
-            string pow = "6.625^1.5";
+            string pow = "6.25^1.5";
             calc.parse(pow);
             Assert.AreEqual(15.625, calc.evaluate(), "line 526");
         }
@@ -534,8 +537,9 @@ namespace Calculator.Tests
         {
             Calculate calc = new Calculate();
             string add = "(1.1+5.1)";
+            double val = 1.1 + 5.1;
             calc.parse(add);
-            Assert.AreEqual(6.2, calc.evaluate(), "line 534");
+            Assert.AreEqual(val, calc.evaluate(), "line 534");
         }
         [TestMethod()]
         public void evalParenthesisAndMultDec()
