@@ -13,6 +13,9 @@ namespace Calculator
         private Stack<double> evalStack = new Stack<double>();
         private char[] operatorTokens = { '+', '-', '*', '/', '^', '%' }; //P-E-MD-AS
         private char[] mathTokens = { 'e', 'L', 'l', 'p', '(', ')' };
+        private enum OpNames { Add = 0, Sub, Mult, Divide, Pow, Mod };
+        private enum mathNames { E = 0,Ln,Log,Pie};
+
         public void parse(String text)
         {
             parseString(text);
@@ -24,15 +27,21 @@ namespace Calculator
         private double Evaluate()
         {
             int outputSize = output.Count();
-
+            char[] mathsymbol = { 'e', 'l', 'L', 'p' };
+            int mathIndex = 0;
             while (output.Count() != 0)
             {
+                mathIndex = Array.IndexOf(mathsymbol, output.Peek()[0]);
                 if (checkIfOperator(output.Peek()))
                 {
                     double secondNum = evalStack.Pop();
                     double firstNum = evalStack.Pop();
                     string operatr = output.Dequeue();
                     evalStack.Push(answer(firstNum, secondNum, operatr));
+                }
+                else if (mathIndex != -1) // if math symbol
+                {
+                    convert(output.Dequeue(),mathIndex);
                 }
                 else
                 {
@@ -41,7 +50,31 @@ namespace Calculator
             }
             return evalStack.Pop();
         }
-        private enum OpNames { Add = 0, Sub, Mult, Divide, Pow, Mod };
+
+        private void convert(string token,int index)
+        {
+            double tempNum = 0.0;
+            switch ((mathNames)index)
+            {
+                case mathNames.E:
+                    evalStack.Push(Math.E);
+                    break;
+                case mathNames.Ln:
+                    tempNum = Double.Parse((token.Substring(1, token.Count() - 1)));
+                    evalStack.Push(Math.Log(tempNum));
+                    break;
+                case mathNames.Log:
+                    tempNum = Double.Parse((token.Substring(1, token.Count() - 1)));
+                    evalStack.Push(Math.Log10(tempNum));
+                    break;
+                case mathNames.Pie:
+                    evalStack.Push(Math.PI);
+                    break;
+                default:
+                    throw new FormatException("invalid token");
+            }
+        }
+
         private double answer(double firstNum, double secondNum, string operatr)
         {
             double ans = 0.0;
